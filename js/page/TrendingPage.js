@@ -7,21 +7,24 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class TrendingPage extends Component<Props> {
   render() {
+    const {navigation} = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.welcome}>TrendingPage==>趋势页面</Text>
+        <Button title={'改变主题颜色'} onPress={() => {
+          navigation.setParams({
+            theme: {
+              tintColor: 'red',
+              updateTime: new Date().getTime()
+            }
+          })
+        }}/>
       </View>
     );
   }
