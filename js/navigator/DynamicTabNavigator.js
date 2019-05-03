@@ -11,7 +11,7 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
-  createAppContainer,BottomTabBar
+  createAppContainer, BottomTabBar
 } from 'react-navigation';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -23,6 +23,8 @@ import MyPage from "../page/MyPage";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NavigationUtil from "./NavigationUtil";
+
+import {connect} from 'react-redux';
 
 type Props = {};
 
@@ -84,7 +86,7 @@ const TABS = {
 }
 
 
-export default class DynamicTabNavigator extends Component<Props> {
+class DynamicTabNavigator extends Component<Props> {
 
   constructor(props) {
     super(props);
@@ -92,22 +94,48 @@ export default class DynamicTabNavigator extends Component<Props> {
   }
 
   _tabNavigator() {
+    if (this.Tabs) {
+      return this.Tabs;
+    }
     const {PopularPage, TrendingPage, FavoritePage, MyPage} = TABS;
     const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage};
-    PopularPage.navigationOptions.tabBarLabel = '最新';//动态修改名字
-    return createBottomTabNavigator(tabs, {
-      tabBarComponent: TabBarComponent,
+    PopularPage.navigationOptions.tabBarLabel = '最热';//动态修改名字
+
+    const BottomTabNavigator = createBottomTabNavigator(tabs, {
+      tabBarComponent: props => {
+        return <TabBarComponent theme={this.props.theme} {...props}/>
+      },
       tabBarPosition: {
         activeTintColor: Platform.OS === 'ios' ? '#E91E63' : '#FFF'
       }
-    });
+    })
+    /**
+     * createAppContainer 使用这个的时候一定要注意 不要放到render中，如果放入了会出现意想不到的效果
+     __   _,--="=--,_   __
+     /  \."    .-.    "./  \
+     /  ,/  _   : :   _  \/` \
+     \  `| /o\  :_:  /o\ |\__/
+     `-'| :="~` _ `~"=: |
+     \`     (_)     `/
+     .-"-.   \      |      /   .-"-.
+     .---{     }--|  /,.-'-.,\  |--{     }---.
+     )  (_)_)_)  \_/`~-===-~`\_/  (_(_(_)  (
+     (  Hello World                          )
+     )                                     (
+     '---------------------------------------'
+     * 
+     * @type {NavigationContainer}
+     */
+    const BottomTabNavigationContainer = createAppContainer(BottomTabNavigator);
+    this.Tabs = BottomTabNavigationContainer;
+    return this.Tabs;
+
   }
 
   render() {
     NavigationUtil.navigation = this.props.navigation;
     const Tab = this._tabNavigator();
-    const BottomTabNavigationContainer = createAppContainer(Tab);
-    return <BottomTabNavigationContainer/>;
+    return <Tab/>;
   }
 }
 
@@ -119,20 +147,28 @@ class TabBarComponent extends React.Component {
       updateTime: new Date().getTime(),
     }
   }
+
   render() {
-    const {routes, index} = this.props.navigation.state;
-    if (routes[index].params) {
-      const {theme} = routes[index].params;
-      if (theme && theme.updateTime > this.theme.updateTime) {
-        this.theme = theme;
-      }
-    }
+    // const {routes, index} = this.props.navigation.state;
+    // if (routes[index].params) {
+    //   const {theme} = routes[index].params;
+    //   if (theme && theme.updateTime > this.theme.updateTime) {
+    //     this.theme = theme;
+    //   }
+    // }
     return <BottomTabBar
       {...this.props}
-      activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+      // activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+      activeTintColor={this.props.theme}
     />
   }
 }
+
+const mapStateToProps = state => ({
+  theme: state.theme.theme,
+});
+
+export default connect(mapStateToProps)(DynamicTabNavigator);
 
 
 const styles = StyleSheet.create({
