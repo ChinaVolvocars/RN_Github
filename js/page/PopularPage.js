@@ -23,7 +23,7 @@ export default class PopularPage extends Component<Props> {
   constructor(props) {
     super(props);
     this.tabNames = ['Java', 'Android', 'Flutter', 'RN', 'iOS', 'PHP'];
-    
+
     console.log('--------PopularPage查看NavigationUtil.navigation--------');
     console.log(NavigationUtil.navigation);
   }
@@ -71,11 +71,10 @@ class PopularTab extends Component<Props> {
       <View style={styles.container}>
         <Text style={styles.welcome}>{tabLabel}</Text>
         <Button title={'跳转详情测试物理返回按键'} onPress={() => {
-          // NavigationUtil.goPage({
-          //   navigation: this.props.navigation
-          // }, 'WelcomePage');
-          // this.props.navigation.navigate('DetailPage');
           NavigationUtil.navigation.navigate('DetailPage');
+        }}/>
+        <Button title={'跳转到网络请求界面'} onPress={() => {
+          NavigationUtil.navigation.navigate('FetchDemoPage');
         }}/>
       </View>
     );
