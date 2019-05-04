@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 
 import NavigationUtil from '../navigator/NavigationUtil';
 
@@ -18,10 +18,8 @@ export default class WelcomePage extends Component<Props> {
   componentDidMount(): void {
     this.timer = setTimeout(() => {
       NavigationUtil.resetToHomePage({
-        navigation:this.props.navigation
+        navigation: this.props.navigation
       });
-      // const {navigation} = this.props;
-      // navigation.navigate('Main');
     }, 200);
   }
 

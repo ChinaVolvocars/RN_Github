@@ -7,13 +7,14 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Button, Platform, StyleSheet, Text, View} from 'react-native';
 import {
   createStackNavigator,
   createMaterialTopTabNavigator,
   createSwitchNavigator,
   createAppContainer
 } from 'react-navigation';
+import NavigationUtil from "../navigator/NavigationUtil";
 
 
 type Props = {};
@@ -21,7 +22,10 @@ export default class PopularPage extends Component<Props> {
 
   constructor(props) {
     super(props);
-    this.tabNames = ['Java', 'Android', 'Flutter', 'RN', 'iOS', 'PHP',];
+    this.tabNames = ['Java', 'Android', 'Flutter', 'RN', 'iOS', 'PHP'];
+    
+    console.log('--------PopularPage查看NavigationUtil.navigation--------');
+    console.log(NavigationUtil.navigation);
   }
 
   _genTabs() {
@@ -66,6 +70,13 @@ class PopularTab extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>{tabLabel}</Text>
+        <Button title={'跳转详情测试物理返回按键'} onPress={() => {
+          // NavigationUtil.goPage({
+          //   navigation: this.props.navigation
+          // }, 'WelcomePage');
+          // this.props.navigation.navigate('DetailPage');
+          NavigationUtil.navigation.navigate('DetailPage');
+        }}/>
       </View>
     );
   }

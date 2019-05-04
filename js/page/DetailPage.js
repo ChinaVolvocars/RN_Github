@@ -14,7 +14,7 @@ export default class DetailPage extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>DetailPage</Text>
+        <Text style={styles.welcome}>详情页面</Text>
       </View>
     );
   }

@@ -26,17 +26,49 @@ import DynamicTabNavigator from '../navigator/DynamicTabNavigator';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import {BackHandler} from "react-native";
+import {NavigationActions} from "react-navigation";
+import {connect} from 'react-redux';
+import NavigationUtil from "../navigator/NavigationUtil";
 
 type Props = {};
-export default class HomePage extends Component<Props> {
+
+class HomePage extends Component<Props> {
+
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /** * 处理 Android 中的物理返回键 * https://reactnavigation.org/docs/en/redux-integration.html#handling-the-hardware-back-button-in-android * @returns {boolean} */
+  onBackPress = () => {
+    const {dispatch, nav} = this.props;
+    //if (nav.index === 0) {
+    if (nav.routes[1].index === 0) {
+      //如果RootNavigator中的MainNavigator的index为0，则不处理返回事件
+      return false;
+    }
+    dispatch(NavigationActions.back());
+    return true;
+  };
 
 
   render() {
-    // const Tab = this._TAB();
-    // const BottomTabNavigationContainer = createAppContainer(Tab);
+    NavigationUtil.navigation = this.props.navigation;
     return <DynamicTabNavigator/>;
   }
 }
+
+
+const mapStateToProps = state => ({
+  nav: state.nav
+});
+
+export default connect(mapStateToProps)(HomePage);
 
 // class TabBarComponent extends React.Component {
 //   constructor(props) {

@@ -123,7 +123,7 @@ class DynamicTabNavigator extends Component<Props> {
      (  Hello World                          )
      )                                     (
      '---------------------------------------'
-     * 
+     *
      * @type {NavigationContainer}
      */
     const BottomTabNavigationContainer = createAppContainer(BottomTabNavigator);
@@ -133,7 +133,6 @@ class DynamicTabNavigator extends Component<Props> {
   }
 
   render() {
-    NavigationUtil.navigation = this.props.navigation;
     const Tab = this._tabNavigator();
     return <Tab/>;
   }

@@ -11,10 +11,19 @@ import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 
 import {connect} from 'react-redux';
 import actions from '../action/index';
+import NavigationUtil from "../navigator/NavigationUtil";
 
 type Props = {};
 
 class TrendingPage extends Component<Props> {
+
+  constructor(props) {
+    super(props);
+    console.log('--------TrendingPage查看NavigationUtil.navigation--------');
+    console.log(NavigationUtil.navigation);
+  }
+  
+  
   render() {
     const {navigation} = this.props;
     return (
@@ -27,8 +36,8 @@ class TrendingPage extends Component<Props> {
           //     updateTime: new Date().getTime()
           //   }
           // })
-
-          this.props.onThemeChange('#097')
+          this.props.onThemeChange('#097');
+          
 
         }}/>
       </View>

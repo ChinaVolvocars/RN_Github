@@ -4,7 +4,8 @@ export default class NavigationUtil {
    * @param navigation
    */
   static goPage(params, page) {
-    const {navigation} = params;
+    // const {navigation} = params;
+    const navigation = NavigationUtil.navigation;
     if (!navigation) {
       console.log('navigation can not to be null')
       return;
