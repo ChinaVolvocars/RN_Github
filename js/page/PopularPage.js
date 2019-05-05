@@ -76,6 +76,10 @@ class PopularTab extends Component<Props> {
         <Button title={'跳转到网络请求界面'} onPress={() => {
           NavigationUtil.navigation.navigate('FetchDemoPage');
         }}/>
+
+        <Button title={'AsyncStorage'} onPress={() => {
+          NavigationUtil.navigation.navigate('AsyncStorageDemoPage');
+        }}/>
       </View>
     );
   }
