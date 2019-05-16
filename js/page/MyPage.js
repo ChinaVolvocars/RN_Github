@@ -31,7 +31,7 @@ export default class MyPage extends Component<Props> {
           // NavigationUtil.goPage({
           //   navigation: this.props.navigation
           // }, 'DetailPage');
-          
+
           console.log({...navigation});
           // NavigationUtil.goPage({
           //   navigation: this.props.navigation
@@ -40,6 +40,17 @@ export default class MyPage extends Component<Props> {
           // this.props.navigation.navigate('Init');
           NavigationUtil.navigation.navigate('DetailPage');
 
+        }}/>
+
+        <Button title={'跳转详情测试物理返回按键'} onPress={() => {
+          NavigationUtil.navigation.navigate('DetailPage');
+        }}/>
+        <Button title={'跳转到网络请求界面'} onPress={() => {
+          NavigationUtil.navigation.navigate('FetchDemoPage');
+        }}/>
+
+        <Button title={'AsyncStorage'} onPress={() => {
+          NavigationUtil.navigation.navigate('AsyncStorageDemoPage');
         }}/>
       </View>
     );
